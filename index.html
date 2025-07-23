@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Minha Amada</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .info {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 24px;
+            text-align: center;
+            pointer-events: none;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+            z-index: 10;
+        }
+
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .message {
+            position: absolute;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 2s;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            max-width: 80%;
+        }
+
+        .show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="info">Para a pessoa mais especial da minha vida ❤️</div>
+    
+    <script>
+        // Array de mensagens românticas
+        const messages = [
+            "Cada momento contigo é especial...",
+            "Seu sorriso ilumina meus dias...",
+            "Você é a razão do meu coração bater mais forte...",
+            "Nada neste mundo se compara a você...",
+            "Te amo mais que todas as estrelas no céu..."
+        ];
+
+        // Criação de corações
+        function createHearts() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart';
+            
+            // Posição aleatória
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            
+            // Tamanho aleatório
+            const size = Math.random() * 30 + 20;
+            heart.style.fontSize = size + 'px';
+            
+            // Duração da animação aleatória
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            
+            document.body.appendChild(heart);
+            
+            // Remove o coração após algum tempo
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Mostra mensagens sequenciais
+        function showMessages() {
+            let index = 0;
+            
+            function displayNextMessage() {
+                if (index >= messages.length) index = 0;
+                
+                const message = document.createElement('div');
+                message.className = 'message';
+                message.textContent = messages[index];
+                message.style.left = Math.random() * 50 + 25 + '%';
+                message.style.top = Math.random() * 50 + 25 + '%';
+                document.body.appendChild(message);
+                
+                setTimeout(() => {
+                    message.classList.add('show');
+                }, 100);
+                
+                setTimeout(() => {
+                    message.classList.remove('show');
+                    setTimeout(() => {
+                        message.remove();
+                    }, 2000);
+                }, 4000);
+                
+                index++;
+                setTimeout(displayNextMessage, 5000);
+            }
+            
+            displayNextMessage();
+        }
+
+        // Inicia tudo
+        function init() {
+            // Cria corações periodicamente
+            setInterval(createHearts, 300);
+            
+            // Mostra mensagens
+            setTimeout(showMessages, 1000);
+        }
+
+        // Quando a página carregar
+        window.onload = init;
+    </script>
+</body>
+</html>
